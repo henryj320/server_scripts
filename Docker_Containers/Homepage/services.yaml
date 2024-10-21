@@ -1,0 +1,205 @@
+- Monitoring:
+    - Uptime-Kuma:
+        icon: /icons/uptime-kuma.png
+        href: https://status.hj320mcserver.xyz/status/homepage
+        container: uptime-kuma
+        statusStyle: dot
+        widget:
+            type: uptimekuma
+            url: http://192.168.1.20:1006
+            slug: homepage
+    - Portainer:
+        icon: /icons/portainer.png
+        href: http://192.168.1.20:9000
+        container: portainer
+        statusStyle: dot
+        widget:
+            type: portainer
+            url: http://192.168.1.20:9000
+            env: 2
+            key: ptr_WzmAhzEnHx5lhUxeXWFD6bS201V5qCMsy4qko6Krwnc=
+    - Minecraft:
+        icon: /icons/minecraft.png
+        container: minecraft-minecraft-1
+        statusStyle: dot
+        widget:
+            type: minecraft
+            url: udp://play.hj320mcserver.xyz:25565
+    - Mealie:
+        icon: /icons/mealie.png
+        href: https://mealie.hj320mcserver.xyz/
+        container: mealie
+        statusStyle: dot
+        widget:
+            type: mealie
+            url: https://mealie.hj320mcserver.xyz
+            key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb25nX3Rva2VuIjp0cnVlLCJpZCI6ImViMmZmN2FjLTJjN2YtNDRlNi04MjhjLTQxYjExMmNiNTUzMSIsIm5hbWUiOiJIb21lcGFnZSBUb2tlbiAyIiwiaW50ZWdyYXRpb25faWQiOiJnZW5lcmljIiwiZXhwIjoxODU1OTQ0MDcwfQ.dplZ7tWrp_l1ZQjLTPF763h8Gk24u3cH7cBDArBnAn4
+            fields: ["recipes", "users", "categories"]
+    - Speedtest:
+        icon: /icons/speedtest.png
+        href: https://speedtest.hj320mcserver.xyz
+        container: speedtest-tracker
+        statusStyle: dot
+        widget:
+            type: speedtest
+            url: https://speedtest.hj320mcserver.xyz
+    - Minecraft Log Converter:
+      # icon: https://foldersync.io/_next/static/media/logo_foldersync.3f80f62e.png
+        icon: /icons/minecraft.png
+        widget:
+          type: customapi
+          url: http://192.168.1.20:1012/minecraft-logs
+          mappings:
+            - field: count
+              label: Total Players
+            - field: last_connection
+              label: Last Connected
+        statusStyle: dot
+        siteMonitor: http://192.168.1.20:1012/minecraft-logs
+    - PhotoPrism:
+        icon: /icons/photoprism.png
+        href: https://prism.hj320mcserver.xyz
+        server: localhost
+        statusStyle: dot
+        siteMonitor: https://prism.hj320mcserver.xyz
+        widget:
+          type: photoprism
+          url: https://prism.hj320mcserver.xyz
+          username: henry
+          password: White 48
+          fields: ["photos", "videos", "people"]
+- Syncing:
+    - File Browser:
+      # icon: https://foldersync.io/_next/static/media/logo_foldersync.3f80f62e.png
+        icon: https://raw.githubusercontent.com/filebrowser/frontend/master/public/img/icons/android-chrome-512x512.png
+        widget:
+          type: customapi
+          url: http://192.168.1.20:1012/filestore
+          mappings:
+            - field: files
+              label: Total Files
+              format: text
+            - field: total_size
+              label: Total Size
+              suffix: GB
+            - field: last_mod
+              label: Last Update
+            - field: users
+              label: Users
+        statusStyle: dot
+        siteMonitor: http://192.168.1.20:1012/filestore
+        href: https://filestore.hj320mcserver.xyz
+    - Joplin Server:
+        icon: /icons/joplin-new.png
+        widget:
+          type: customapi
+          url: http://192.168.1.20:1012/joplin-cache
+          mappings:
+            - field: total_notes
+              label: Total Notes
+            - field: last_update
+              label: Last Update
+              format: text
+            - field: total_images
+              label: Total Images
+            - field: total_folders
+              label: Total Folders
+            - field: last_sync
+              label: Last Sync
+              suffix: GB
+        statusStyle: dot
+        siteMonitor: https://joplin.hj320mcserver.xyz/api/ping
+    - FolderSync for Henry:
+      # icon: https://foldersync.io/_next/static/media/logo_foldersync.3f80f62e.png
+        icon: /icons/foldersync.png
+        widget:
+          type: customapi
+          url: http://192.168.1.20:1012/Henry
+          mappings:
+            - field: synced_this_week
+              label: This Week
+            - field: last_sync
+              label: Last Sync
+              format: text
+            - field: images
+              label: Total Images
+            - field: total_size
+              label: Total Size
+              suffix: GB
+        statusStyle: dot
+        siteMonitor: http://192.168.1.20:1012/Henry
+    - FolderSync for Poppy:
+      # icon: https://foldersync.io/_next/static/media/logo_foldersync.3f80f62e.png
+        icon: /icons/foldersync-pink.png
+        widget:
+          type: customapi
+          url: http://192.168.1.20:1012/Poppy
+          mappings:
+            - field: synced_this_week
+              label: This Week
+            - field: last_sync
+              label: Last Sync
+              format: text
+            - field: images
+              label: Total Images
+            - field: total_size
+              label: Total Size
+              suffix: GB
+        statusStyle: dot
+        siteMonitor: http://192.168.1.20:1012/Henry
+    - FolderSync for Mum:
+        icon: /icons/foldersync-pink.png
+        widget:
+          type: customapi
+          url: http://192.168.1.20:1012/Mum
+          mappings:
+            - field: synced_this_week
+              label: This Week
+            - field: last_sync
+              label: Last Sync
+              format: text
+            - field: images
+              label: Total Images
+            - field: total_size
+              label: Total Size
+              suffix: GB
+        statusStyle: dot
+        siteMonitor: http://192.168.1.20:1012/Mum
+- Security:
+    - ClamAV:
+      # icon: https://www.f1-consult.com/wp-content/uploads/2018/07/clamav-logo-full.png
+        icon: /icons/clamav.png
+        widget:
+          type: customapi
+          url: http://192.168.1.20:1011/
+          mappings:
+            - field: plaintext
+              label: Status
+              format: text
+            - field: time
+              label: Last check
+            - field: last_event
+              label: Last Incident
+        statusStyle: dot
+        siteMonitor: http://192.168.1.20:1011/
+    - Traefik:
+        icon: /icons/traefik.png
+        statusStyle: dot
+        siteMonitor: https://traefik.hj320mcserver.xyz
+        href: https://traefik.hj320mcserver.xyz
+        widget:
+            type: traefik
+            url: https://traefik.hj320mcserver.xyz
+    - IP Checker:
+      # icon: https://foldersync.io/_next/static/media/logo_foldersync.3f80f62e.png
+        icon: /icons/ip-checker.png
+        widget:
+          type: customapi
+          url: http://192.168.1.20:1012/update-ip
+          mappings:
+            - field: last_update
+              label: Last Update
+            - field: last_run
+              label: Last Checked
+        statusStyle: dot
+        siteMonitor: http://192.168.1.20:1012/update-ip

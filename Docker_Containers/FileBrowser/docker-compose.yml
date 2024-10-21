@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  file-browser:
+    image: filebrowser/filebrowser
+    container_name: file-browser
+    user: 1000:1000  # Use ` id ` in the terminal to get the user's UID and GID.
+    ports: 
+      - 1007:80
+    volumes:
+      - /home/henry/SharedFolder/:/srv
+      - /home/henry/Software/FileBrowser/filebrowser.db:/database.db
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+            - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.file-browser.entrypoints=websecure
+      - traefik.http.routers.file-browser.tls.certresolver=myresolver
+      - traefik.http.routers.file-browser.rule=Host(`filestore.hj320mcserver.xyz`)
+
+networks:
+  web:
+    name: web
+    external: true
