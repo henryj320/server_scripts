@@ -36,7 +36,7 @@ services:
         environment:
             - MARIADB_DATABASE=speedtest_tracker
             - MARIADB_USER=henry
-            - MARIADB_PASSWORD=ekVPKZHgNRjY5vqfpw
+            - MARIADB_PASSWORD=NGINX_PASSWORD
             - MARIADB_RANDOM_ROOT_PASSWORD=true
         volumes:
             - speedtest-db:/var/lib/mysql

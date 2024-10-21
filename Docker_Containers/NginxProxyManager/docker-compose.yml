@@ -16,7 +16,7 @@ services:
       DB_MYSQL_HOST: "db"
       DB_MYSQL_PORT: 3306
       DB_MYSQL_USER: "henry"
-      DB_MYSQL_PASSWORD: "ekVPKZHgNRjY5vqfpw"
+      DB_MYSQL_PASSWORD: "NGINX_PASSWORD"
       DB_MYSQL_NAME: "npm"
       # Uncomment this if IPv6 is not enabled on your host
       # DISABLE_IPV6: 'true'
@@ -30,10 +30,10 @@ services:
     image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 'ekVPKZHgNRjY5vqfpw'
+      MYSQL_ROOT_PASSWORD: 'NGINX_PASSWORD'
       MYSQL_DATABASE: 'npm'
       MYSQL_USER: 'henry'
-      MYSQL_PASSWORD: 'ekVPKZHgNRjY5vqfpw'
+      MYSQL_PASSWORD: 'NGINX_PASSWORD'
     volumes:
       - ./mysql:/var/lib/mysql
 
