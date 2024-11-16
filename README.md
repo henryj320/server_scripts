@@ -1,6 +1,6 @@
 # server_scripts
 
-Last update: 2024-10-21 16:39
+Last update: 2024-11-16 11:00
 <br><br>
 
 A collection of unrelated scripts used by the Rocky Server.
@@ -11,7 +11,7 @@ A collection of unrelated scripts used by the Rocky Server.
 
 **Date Started**: 2024-10-21
 
-**Date Completed**: 2024-10-21
+**Date Completed**: 2024-11-16
 
 **Language**: Bash
 
