@@ -14,5 +14,3 @@ if [ -n "$WINDOW_ID" ]; then
 else
     echo "Steam Big Picture Mode is not open."
 fi
-
-# Big butts
