@@ -1,6 +1,6 @@
 # server_scripts
 
-Last update: 2024-11-16 11:00
+Last update: 2024-11-27 20:35
 <br><br>
 
 A collection of unrelated scripts used by the Rocky Server.
@@ -15,4 +15,19 @@ A collection of unrelated scripts used by the Rocky Server.
 
 **Language**: Bash
 
-**Overview**: A collection of unrelated scripts used by the Rocky Server.
+**Overview**: A collection of unrelated scripts used by the Rocky Server. These include:
+
+- **backup_secure_file.sh**:
+    - Copies "/var/log/secure" onto the SMB drive.
+- **check_dnf_updates.sh**:
+    - Sends a Discord message if there are any important or critical DNF updates.
+- **check_logs.sh**:
+    - Sends a Discord message if a cron has failed. Detected by log files not updating.
+- **resize_steam.sh**:
+    - Used on the Gaming PC to automatically resize Steam. Fixes visual glitches caused by Nvidia drivers.
+- **run_clamscan.sh**:
+    - Runs ClamAV as an antivirus checker. Outputs the results into log files and the Homepage.
+- **send_game_screenshot.sh**
+    - Use *send_to_discord.py* with its new image-sending functionality to send any screenshots uploaded to a specific folder onto the Discord server.
+- **virusEvent.sh**:
+    - Used to send an alert to Homepage on a virus event.
