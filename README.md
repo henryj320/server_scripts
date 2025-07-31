@@ -31,3 +31,5 @@ A collection of unrelated scripts used by the Rocky Server.
     - Use *send_to_discord.py* with its new image-sending functionality to send any screenshots uploaded to a specific folder onto the Discord server.
 - **virusEvent.sh**:
     - Used to send an alert to Homepage on a virus event.
+- **watch_sync_update.sh**:
+    - Sends a Ntfy message if "/home/casa/locations/sync" has any file creations or deletions.

@@ -1,0 +1,13 @@
+# Lives in "/home/software/.config/systemd/user".
+# ` systemctl --user start watch_sync_update.service `
+
+[Unit]
+Description=Sync Update Watcher
+After=network.target
+
+[Service]
+ExecStart=/home/software/repositories/server_scripts/Ntfy/watch_sync_update.sh
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
