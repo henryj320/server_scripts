@@ -1,0 +1,5 @@
+vi /etc/profile
+curl -s -d "🟢 Whale Server - User $(whoami) logged into $(hostname)" https://ntfy.sh/whale_server_1
+
+vi /etc/bash.bash_logout
+curl -s -d "⚪ User $(whoami) disconnected from $(hostname)" https://ntfy.sh/whale_server_1

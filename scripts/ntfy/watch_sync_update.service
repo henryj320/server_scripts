@@ -1,5 +1,5 @@
 # Lives in "/home/software/.config/systemd/user".
-# ` systemctl --user start watch_sync_update.service `
+# Enable with: systemctl --user start watch_sync_update.service
 
 [Unit]
 Description=Sync Update Watcher
