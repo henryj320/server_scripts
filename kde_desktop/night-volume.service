@@ -1,0 +1,6 @@
+[Unit]
+Description=Set night volume on speakers.
+
+[Service]
+Type=oneshot
+ExecStart=/home/henry/Documents/Repositories/server_scripts/kde_desktop/night-volume.sh
