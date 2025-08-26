@@ -1,0 +1,11 @@
+# Lives in /home/henry/.config/systemd/user
+
+[Unit]
+Description=Auto switch audio sink when in a Vesktop call
+
+[Service]
+ExecStart=%h/Documents/Repositories/server_scripts/kde_desktop/mic-auto-switch.service
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,6 +1,6 @@
 # Server Status
 
-The purpose of this is to ` notify-send ` messages on other computers when the Rocky Server is performing a job.
+The purpose of this is to ` notify-send ` messages on other computers when the Whale Server is performing a job.
 
 ## Files
 
@@ -16,10 +16,10 @@ It consists of three files:
 
 The basic process is as follows:
 
-### Rocky Server
+### Whale Server
 
-1. The Rocky Server starts a job and updates *server_status.json*.
-2. The Rocky Server also starts *auto_update_server_status.sh* at the same time
+1. The Whale Server starts a job and updates *server_status.json*.
+2. The Whale Server also starts *auto_update_server_status.sh* at the same time
 3. After 5 minutes, *auto_update_server_status.sh* will automatically reset *server_status.json*.
 
 ### Other Computers

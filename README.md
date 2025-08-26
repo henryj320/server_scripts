@@ -3,7 +3,7 @@
 Last update: 2025-07-31 23:53
 <br><br>
 
-A collection of unrelated scripts used by the Rocky Server.
+A collection of unrelated scripts used by the Whale Server.
 
 ## server_scripts
 
@@ -15,7 +15,9 @@ A collection of unrelated scripts used by the Rocky Server.
 
 **Language**: Bash
 
-**Overview**: A collection of unrelated scripts used by the Rocky Server. These include:
+**Overview**: A collection of unrelated scripts used by the Whale Server or other Linux computers. These include:
+
+### Rocky Server
 
 - **backup_secure_file.sh**:
     - Copies "/var/log/secure" onto the SMB drive.
@@ -33,3 +35,8 @@ A collection of unrelated scripts used by the Rocky Server.
     - Used to send an alert to Homepage on a virus event.
 - **watch_sync_update.sh**:
     - Sends a Ntfy message if "/home/casa/locations/sync" has any file creations or deletions.
+
+### KDE Desktop
+
+- **mic-auto-switch.sh**
+    - Monitor for an active Discord (Vesktop client) call and switch output from speakers to headphones.
