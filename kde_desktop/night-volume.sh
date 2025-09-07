@@ -4,7 +4,7 @@ set -euo pipefail
 # Script runs on startup in the KDE settings.
 
 # Volume settings.
-NIGHT_VOLUME=65   # Volume after 21:00.
+NIGHT_VOLUME=60   # Volume after 21:00.
 DAY_VOLUME=80     # Volume before 21:00.
 
 # Speaker name in pactl list short sinks.

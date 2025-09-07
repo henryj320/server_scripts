@@ -35,6 +35,8 @@ A collection of unrelated scripts used by the Whale Server.
     - Used to send an alert to Homepage on a virus event.
 - **watch_sync_update.sh**:
     - Sends a Ntfy message if "/home/casa/locations/sync" has any file creations or deletions.
+- **sync_to_proton_drive.sh**:
+    - Uploads server content to a pre-configured Proton Drive and notifies Ntfy on completion.
 
 ### KDE Desktop
 
