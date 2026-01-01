@@ -27,8 +27,12 @@ switch_to_sink "$HEADPHONES"
 "$@"            # Runs the command passed from Steam
 exit_code=$?    # Capture game's exit code
 
-# On game close, switch back to speakers.
-switch_to_sink "$SPEAKERS"
+# On game close, switch back to speakers if not in a discord call.
+if pactl list source-outputs | grep -q 'application.process.binary = "vesktop"'; then
+    echo "In a Discord call, keeping on headphones."
+else
+    switch_to_sink "$SPEAKERS"
+fi
 
 exit $exit_code
 
