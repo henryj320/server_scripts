@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCAN_PATH="/home/casa/locations/documents/Configurations"
+SCAN_PATH="/home/casa/locations"
 LOG_FILE="/home/casa/locations/logs/ClamAV/removed_files.log"
 
 NTFY_TOPIC="https://ntfy.sh/whale_server_1"
@@ -26,6 +26,7 @@ $ECHO_BIN "$($DATE_BIN) - Nightly scan of $SCAN_PATH started."
 SCAN_EXIT_CODE=0
 FAILED_DIRS=()
 DIR_COUNT=0
+START_TIME=$($DATE_BIN +%s)
 
 for dir in "$SCAN_PATH"/*; do
   [ -d "$dir" ] || continue
@@ -57,9 +58,16 @@ for dir in "$SCAN_PATH"/*; do
   DIR_COUNT=$((DIR_COUNT + 1))
 done
 
+# Figure out how long it took.
+END_TIME=$($DATE_BIN +%s)
+DURATION_SECONDS=$((END_TIME - START_TIME))
+DURATION_MINUTES=$((DURATION_SECONDS / 60))
+DURATION_REMAINDER_SECONDS=$((DURATION_SECONDS % 60))
+RUNTIME_FMT="${DURATION_MINUTES} minutes and ${DURATION_REMAINDER_SECONDS} seconds"
+
 # Final Ntfy.
 if [ $SCAN_EXIT_CODE -eq 0 ]; then
-  $CURL_BIN -s -d "${DEVICE_EMOJI} ${DEVICE_NAME} - Nightly ClamAV scan completed successfully. $DIR_COUNT directories scanned." "$NTFY_TOPIC"
+  $CURL_BIN -s -d "${DEVICE_EMOJI} ${DEVICE_NAME} - Nightly ClamAV scan completed successfully. $DIR_COUNT directories scanned in ${RUNTIME_FMT}." "$NTFY_TOPIC"
 else
   if [ ${#FAILED_DIRS[@]} -gt 0 ]; then
     FAILED_LIST=$(printf ", %s" "${FAILED_DIRS[@]}")
@@ -67,7 +75,7 @@ else
   else
     FAILED_LIST="unknown directories"
   fi
-  $CURL_BIN -s -d "⚠️ ${DEVICE_NAME} - ClamAV scan failed in: $FAILED_LIST. Directories scanned: $DIR_COUNT directories scanned." "$NTFY_TOPIC"
+  $CURL_BIN -s -d "⚠️ ${DEVICE_NAME} - ClamAV scan failed in: $FAILED_LIST. Directories scanned: $DIR_COUNT directories scanned in ${RUNTIME_FMT}." "$NTFY_TOPIC"
 fi
 
 exit $SCAN_EXIT_CODE
