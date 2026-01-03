@@ -1,4 +1,4 @@
 .env
 
-scripts/ntfy/general_startup_alert.sh
-scripts/ntfy/general_shutdown_alert.sh
+*/general_shutdown_alert.sh
+*/general_shutdown_alert.sh
