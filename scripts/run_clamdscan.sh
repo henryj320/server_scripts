@@ -14,7 +14,7 @@ ECHO_BIN="/usr/bin/echo"
 CURL_BIN="/usr/bin/curl"
 
 # Directories to Ignore.
-EXCLUDE_DIRS=("Education" "Housing")
+EXCLUDE_DIRS=("Education" "Housing" "pictures")
 
 # Log header.
 $ECHO_BIN -e "\n\n\n" >> "$LOG_FILE"
