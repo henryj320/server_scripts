@@ -16,52 +16,101 @@ CURL_BIN="/usr/bin/curl"
 # Directories to Ignore.
 EXCLUDE_DIRS=("Education" "Housing" "pictures" "Nothing Phone 2" "University")
 
+# Build prune expression
 PRUNE_EXPR=()
 for d in "${EXCLUDE_DIRS[@]}"; do
   PRUNE_EXPR+=( -name "$d" -o )
 done
 unset 'PRUNE_EXPR[${#PRUNE_EXPR[@]}-1]'
-# -------------------------------
 
-# Log header.
-$ECHO_BIN -e "\n\n\n" >> "$LOG_FILE"
-$ECHO_BIN "$($DATE_BIN) - Nightly scan of $SCAN_PATH started." >> "$LOG_FILE"
-$ECHO_BIN "$($DATE_BIN) - Nightly scan of $SCAN_PATH started."
+# -------------------------------
+# Log header
+# -------------------------------
+$ECHO_BIN -e "\n\n\n" | tee -a "$LOG_FILE"
+$ECHO_BIN -e "------------------------------------------------------------------------------------------------------------------------\n" | tee -a "$LOG_FILE"
+$ECHO_BIN "$($DATE_BIN) - Nightly scan of $SCAN_PATH started." | tee -a "$LOG_FILE"
 
 SCAN_EXIT_CODE=0
 START_TIME=$($DATE_BIN +%s)
 
+$ECHO_BIN "$($DATE_BIN) - Scanning $SCAN_PATH (with pruned exclusions)" | tee -a "$LOG_FILE"
 
-$ECHO_BIN "$($DATE_BIN) - Scanning $SCAN_PATH (with pruned exclusions)" >> "$LOG_FILE"
-$ECHO_BIN "$($DATE_BIN) - Scanning $SCAN_PATH (with pruned exclusions)"
 
-if ! find "$SCAN_PATH" \
-  \( -type d \( "${PRUNE_EXPR[@]}" \) -prune \) -o \
-  -type f -print0 |
-  xargs -0 -r "$CLAMDSCAN_BIN" \
-    --verbose \
-    --remove \
-    --infected \
-    --multiscan \
-    --log="$LOG_FILE"
-then
-  SCAN_EXIT_CODE=2
-fi
+$ECHO_BIN -e "\n$($DATE_BIN) - Skipped subdirectories:" | tee -a "$LOG_FILE"
+find "$SCAN_PATH" -type d \( "${PRUNE_EXPR[@]}" \) -print | tee -a "$LOG_FILE"
 
-DIR_COUNT=$(find "$SCAN_PATH" -mindepth 1 -maxdepth 1 -type d | wc -l)
 
+
+
+
+
+# -------------------------------
+# 1️⃣ Build list of directories to scan
+# -------------------------------
+SCAN_DIRS=()
+
+for dir in "$SCAN_PATH"/*; do
+  [ -d "$dir" ] || continue
+  base="$(basename "$dir")"
+
+  # Skip top-level excluded directories
+  if [[ " ${EXCLUDE_DIRS[*]} " =~ " $base " ]]; then
+    continue
+  fi
+
+  SCAN_DIRS+=("$dir")
+done
+
+# Optional: show directories that will be scanned
+$ECHO_BIN -e "\n$($DATE_BIN) - Directories that will be scanned:" | tee -a "$LOG_FILE"
+for d in "${SCAN_DIRS[@]}"; do
+  $ECHO_BIN "  SCAN: $d" | tee -a "$LOG_FILE"
+done
+$ECHO_BIN -e "\n" | tee -a "$LOG_FILE"
+
+
+# -------------------------------
+# 2️⃣ Run clamdscan on each directory individually
+# -------------------------------
+for dir in "${SCAN_DIRS[@]}"; do
+  echo
+  echo "===== Scanning directory: $dir =====" | tee -a "$LOG_FILE"
+
+  if ! find "$dir" \
+    \( -type d \( "${PRUNE_EXPR[@]}" \) -prune \) -o \
+    -type f -print0 |
+    xargs -0 -r "$CLAMDSCAN_BIN" \
+      --verbose \
+      --remove \
+      --infected \
+      --multiscan \
+      --log="$LOG_FILE"
+  then
+    SCAN_EXIT_CODE=2
+  fi
+done
+
+# Count top-level directories scanned
+DIR_COUNT=${#SCAN_DIRS[@]}
+
+# -------------------------------
 # Timing
+# -------------------------------
 END_TIME=$($DATE_BIN +%s)
 DURATION_SECONDS=$((END_TIME - START_TIME))
 DURATION_MINUTES=$((DURATION_SECONDS / 60))
 DURATION_REMAINDER_SECONDS=$((DURATION_SECONDS % 60))
 RUNTIME_FMT="${DURATION_MINUTES} minutes and ${DURATION_REMAINDER_SECONDS} seconds"
 
+# -------------------------------
 # Final Ntfy
+# -------------------------------
 if [ $SCAN_EXIT_CODE -eq 0 ]; then
   $CURL_BIN -s -d "${DEVICE_EMOJI} ${DEVICE_NAME} - Nightly ClamAV scan completed successfully. $DIR_COUNT directories scanned in ${RUNTIME_FMT}." "$NTFY_TOPIC"
+  $ECHO_BIN -e "\n$($DATE_BIN) - Nightly ClamAV scan completed successfully. $DIR_COUNT directories scanned in ${RUNTIME_FMT}." | tee -a "$LOG_FILE"
 else
   $CURL_BIN -s -d "⚠️ ${DEVICE_NAME} - ClamAV scan encountered errors. Directories scanned: $DIR_COUNT in ${RUNTIME_FMT}." "$NTFY_TOPIC"
+  $ECHO_BIN -e "\n$($DATE_BIN) - ClamAV scan encountered errors. Directories scanned: $DIR_COUNT in ${RUNTIME_FMT}." | tee -a "$LOG_FILE"
 fi
 
 exit $SCAN_EXIT_CODE
