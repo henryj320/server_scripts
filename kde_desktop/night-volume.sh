@@ -17,7 +17,7 @@ CURRENT_SINK=$(pactl info | awk -F': ' '/Default Sink:/ {print $2}')
 if [[ "$CURRENT_SINK" == "$SPEAKERS" ]]; then
     HOUR=$(date +%H)
     # If past 21:00
-    if (( HOUR >= 21 || HOUR < 8 )); then
+    if (( HOUR >= 20 || HOUR < 8 )); then
         pactl set-sink-volume "$CURRENT_SINK" "${NIGHT_VOLUME}%"
     else
         pactl set-sink-volume "$CURRENT_SINK" "${DAY_VOLUME}%"

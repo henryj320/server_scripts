@@ -3,8 +3,8 @@
 DEVICE_NAME="Be Quiet PC"
 DEVICE_EMOJI="⬆️"
 
-if [ "$(date +%u)" -ne 7 ]; then
-    echo "Not Sunday, exiting early."
+if [ "$(date +%u)" -ne 6 ]; then
+    echo "Not Saturday, exiting early."
     exit 0
 fi
 
