@@ -20,7 +20,8 @@ case "${1:-}" in
         hours=$((minutes / 60))
         remainder=$((minutes % 60))
 
-        curl -d "🎧 Razer Headphones - In use for ${hours}h ${remainder}m" "https://ntfy.sh/whale_server_1"
+        # curl -d "🎧 Razer Headphones - In use for ${hours}h ${remainder}m" "https://ntfy.sh/whale_server_1"
+        notify-send -a "Headphone Monitor" -i audio-headphones-symbolic "Razer Headphones" "In use for ${hours} hours ${remainder} minutes"
 
         exit 0
         ;;
