@@ -17,11 +17,20 @@ case "${1:-}" in
 
     check)
         minutes="$(cat "$MINUTES_FILE")"
-        hours=$((minutes / 60))
-        remainder=$((minutes % 60))
 
-        # curl -d "🎧 Razer Headphones - In use for ${hours}h ${remainder}m" "https://ntfy.sh/whale_server_1"
-        notify-send -a "Headphone Monitor" -i audio-headphones-symbolic "Razer Headphones" "In use for ${hours} hours ${remainder} minutes"
+        TOTAL=1360
+        remaining=$((TOTAL - minutes))
+
+        if (( remaining < 0 )); then
+            remaining=0
+        fi
+
+        percent=$((remaining * 100 / TOTAL))
+
+        hours=$((remaining / 60))
+        remainder=$((remaining % 60))
+
+        notify-send -a "Headphone Monitor" -i audio-headphones-symbolic "Razer Headphones" "${percent}% battery remaining (${hours} hours ${remainder} minutes)"
 
         exit 0
         ;;
@@ -51,28 +60,22 @@ if [[ "$current" == "$HEADPHONES" ]]; then
     minutes=$((minutes + 5))
     echo "$minutes" > "$MINUTES_FILE"
 
-    # Ntfy every hour of usage.
-    # if (( minutes > 0 && minutes % 60 == 0 )); then
-    #     hours=$((minutes / 60))
-    #     curl -d "🎧 Razer Headphones - In use for ${hours} hours" "https://ntfy.sh/whale_server_1"
-    # fi
-
     # Notify at battery thresholds.
     case "$minutes" in
         680)
             notify-send -a "Headphone Monitor" -i battery-level-50-symbolic "Razer Headphones" "50% battery remaining"
             ;;
         1020)
-            notify-send -a "Headphone Monitor" -i battery-level-20-symbolic "Razer Headphones" "25% battery remaining"
+            notify-send -a "Headphone Monitor" -i battery-level-20-symbolic "Razer Headphones" "25% battery remaining (6 hours)"
             ;;
         1225)
-            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "10% battery remaining"
+            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "10% battery remaining (2 hours)"
             ;;
         1290)
-            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "5% battery remaining"
+            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "5% battery remaining (1 hour)"
             ;;
         1330)
-            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "2% battery remaining"
+            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "2% battery remaining (30 minutes)"
             ;;
     esac
 
