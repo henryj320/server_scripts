@@ -30,7 +30,11 @@ case "${1:-}" in
         hours=$((remaining / 60))
         remainder=$((remaining % 60))
 
-        notify-send -a "Headphone Monitor" -i audio-headphones-symbolic "Razer Headphones" "${percent}% battery remaining (${hours} hours ${remainder} minutes)"
+        # Round percentage down to nearest 10 for icon name
+        icon_level=$(( (percent / 10) * 10 ))
+        icon="battery-level-${icon_level}-symbolic"
+
+        notify-send -a "Headphone Monitor" -i "$icon" "Razer Headphones" "${percent}% battery remaining (${hours} hours ${remainder} minutes)"
 
         exit 0
         ;;
