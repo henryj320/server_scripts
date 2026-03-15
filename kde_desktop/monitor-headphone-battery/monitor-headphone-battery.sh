@@ -52,10 +52,29 @@ if [[ "$current" == "$HEADPHONES" ]]; then
     echo "$minutes" > "$MINUTES_FILE"
 
     # Ntfy every hour of usage.
-    if (( minutes > 0 && minutes % 60 == 0 )); then
-        hours=$((minutes / 60))
-        curl -d "🎧 Razer Headphones - In use for ${hours} hours" "https://ntfy.sh/whale_server_1"
-    fi
+    # if (( minutes > 0 && minutes % 60 == 0 )); then
+    #     hours=$((minutes / 60))
+    #     curl -d "🎧 Razer Headphones - In use for ${hours} hours" "https://ntfy.sh/whale_server_1"
+    # fi
+
+    # Notify at battery thresholds.
+    case "$minutes" in
+        680)
+            notify-send -a "Headphone Monitor" -i battery-level-50-symbolic "Razer Headphones" "50% battery remaining"
+            ;;
+        1020)
+            notify-send -a "Headphone Monitor" -i battery-level-20-symbolic "Razer Headphones" "25% battery remaining"
+            ;;
+        1225)
+            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "10% battery remaining"
+            ;;
+        1290)
+            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "5% battery remaining"
+            ;;
+        1330)
+            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "2% battery remaining"
+            ;;
+    esac
 
     exit 0
 fi
