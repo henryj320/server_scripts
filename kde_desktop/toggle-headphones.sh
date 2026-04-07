@@ -9,6 +9,7 @@ switch_to_sink() {
     if [[ "$current" == "$HEADPHONES" ]]; then
         echo "Switching to: $SPEAKERS (speakers)"
         pactl set-default-sink "$SPEAKERS"
+        /home/henry/Documents/Repositories/server_scripts/kde_desktop/night-volume.sh
         # Move existing streams
         pactl list short sink-inputs | awk '{print $1}' | while read -r input; do
             pactl move-sink-input "$input" "$SPEAKERS"
@@ -16,6 +17,7 @@ switch_to_sink() {
     elif [[ "$current" == "$SPEAKERS" ]]; then
         echo "Switching to: $HEADPHONES (headphones)"
         pactl set-default-sink "$HEADPHONES"
+        pactl set-sink-volume @DEFAULT_SINK@ 65%
         # Move existing streams
         pactl list short sink-inputs | awk '{print $1}' | while read -r input; do
             pactl move-sink-input "$input" "$HEADPHONES"

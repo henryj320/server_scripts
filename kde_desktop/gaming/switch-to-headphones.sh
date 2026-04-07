@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -u
 
-# Launch Option: /home/henry/Documents/Repositories/server_scripts/kde_desktop/switch-to-headphones.sh %command%
+# Launch Option: /home/henry/Documents/Repositories/server_scripts/kde_desktop/gaming/switch-to-headphones.sh %command%
 
 # Switch output (sink) to/from headphones.
 switch_to_sink() {
@@ -23,6 +23,7 @@ SPEAKERS="alsa_output.pci-0000_00_1f.3.analog-stereo"
 
 # On game start, go to headphones.
 switch_to_sink "$HEADPHONES"
+pactl set-sink-volume @DEFAULT_SINK@ 65%
 
 "$@"            # Runs the command passed from Steam
 exit_code=$?    # Capture game's exit code
@@ -32,6 +33,7 @@ if pactl list source-outputs | grep -q 'application.process.binary = "vesktop"';
     echo "In a Discord call, keeping on headphones."
 else
     switch_to_sink "$SPEAKERS"
+    /home/henry/Documents/Repositories/server_scripts/kde_desktop/night-volume.sh
 fi
 
 exit $exit_code
