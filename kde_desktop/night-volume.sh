@@ -19,7 +19,9 @@ if [[ "$CURRENT_SINK" == "$SPEAKERS" ]]; then
     # If past 21:00
     if (( HOUR >= 20 || HOUR < 8 )); then
         pactl set-sink-volume "$CURRENT_SINK" "${NIGHT_VOLUME}%"
+        notify-send -a "Night Volume" -i audio-volume-medium-symbolic -t 4000 "Night Volume" "Volume decreased to $NIGHT_VOLUME%."
     else
         pactl set-sink-volume "$CURRENT_SINK" "${DAY_VOLUME}%"
+        notify-send -a "Night Volume" -i audio-volume-high-symbolic -t 4000 "Night Volume" "Volume set to $DAY_VOLUME%."
     fi
 fi

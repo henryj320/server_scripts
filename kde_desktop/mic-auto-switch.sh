@@ -19,7 +19,7 @@ switch_to_sink() {
         pactl list short sink-inputs | awk '{print $1}' | while read -r input; do
             pactl move-sink-input "$input" "$target"
         done
-        # command -v notify-send >/dev/null && notify-send "Audio switched" "$target"
+        # notify-send -a "Audio Switch" -i audio-input-microphone-symbolic -t 4000 "Audio Switch" "Audio device switched."
     fi
 }
 

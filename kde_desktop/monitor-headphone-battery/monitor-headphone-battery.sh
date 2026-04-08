@@ -34,7 +34,7 @@ case "${1:-}" in
         icon_level=$(( (percent / 10) * 10 ))
         icon="battery-level-${icon_level}-symbolic"
 
-        notify-send -a "Headphone Monitor" -i "$icon" "Razer Headphones" "${percent}% battery remaining (${hours} hours ${remainder} minutes)"
+        notify-send -a "Headphone Monitor" -i "$icon" -t 4000 "Razer Headphones" "${percent}% battery remaining (${hours} hours ${remainder} minutes)"
 
         exit 0
         ;;
@@ -67,19 +67,19 @@ if [[ "$current" == "$HEADPHONES" ]]; then
     # Notify at battery thresholds.
     case "$minutes" in
         680)
-            notify-send -a "Headphone Monitor" -i battery-level-50-symbolic "Razer Headphones" "50% battery remaining"
+            notify-send -a "Headphone Monitor" -i battery-level-50-symbolic -t 4000 "Razer Headphones" "50% battery remaining"
             ;;
         1020)
-            notify-send -a "Headphone Monitor" -i battery-level-20-symbolic "Razer Headphones" "25% battery remaining (6 hours)"
+            notify-send -a "Headphone Monitor" -i battery-level-20-symbolic -t 4000 "Razer Headphones" "25% battery remaining (6 hours)"
             ;;
         1225)
-            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "10% battery remaining (2 hours)"
+            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic -t 4000 "Razer Headphones" "10% battery remaining (2 hours)"
             ;;
         1290)
-            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "5% battery remaining (1 hour)"
+            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic -t 4000 "Razer Headphones" "5% battery remaining (1 hour)"
             ;;
         1330)
-            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic "Razer Headphones" "2% battery remaining (30 minutes)"
+            notify-send -a "Headphone Monitor" -i battery-level-10-symbolic -t 4000 "Razer Headphones" "2% battery remaining (30 minutes)"
             ;;
     esac
 
