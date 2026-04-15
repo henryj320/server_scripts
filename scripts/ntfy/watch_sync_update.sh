@@ -1,7 +1,10 @@
 #!/bin/bash
 
+
+NTFY_FILE="/home/software/repositories/server_scripts/ntfy_location.txt"
+NTFY_TOPIC="$(cat "$NTFY_FILE")"
+
 WATCH_DIR="/home/casa/locations/sync"
-NTFY_TOPIC="whale_server_1"
 BUFFER_TIME=600  # Seconds to batch events
 
 event_file=$(mktemp)

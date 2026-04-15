@@ -1,5 +1,8 @@
 #!/bin/bash
 
+NTFY_FILE="/home/software/repositories/server_scripts/ntfy_location.txt"
+ntfy_channel="$(cat "$NTFY_FILE")"
+
 # Set variables.
 LOCAL_BASE="/home/casa/locations/documents"
 REMOTE_NAME="ProtonDrive"
@@ -38,7 +41,7 @@ echo "Used space: ${used_gib} GiB"
 echo -n "Checking used Proton Drive space... "
 if [ "$used_gib" -ge 14 ]; then
     echo "${used_gib} GiB out of 16 GiB. Aborting!"
-    curl -d "☁️ Whale Server - Proton Drive sync aborted! Proton Drive nearly full (${used_gib} GiB used)" "ntfy.sh/whale_server_1"
+    curl -d "☁️ Whale Server - Proton Drive sync aborted! Proton Drive nearly full (${used_gib} GiB used)" "ntfy.sh/$ntfy_channel"
     exit 1
 else
     echo "${used_gib} GiB out of 16 GiB ✅"
@@ -72,4 +75,4 @@ echo ""
 total_time=$(( SECONDS - start_timer ))
 minutes=$(( total_time / 60 ))
 seconds=$(( total_time % 60 ))
-curl -d "☁️ Whale Server - Proton Drive Sync completed with ${used_gib} GiB stored. Took ${minutes} minutes ${seconds} seconds" "ntfy.sh/whale_server_1"
+curl -d "☁️ Whale Server - Proton Drive Sync completed with ${used_gib} GiB stored. Took ${minutes} minutes ${seconds} seconds" "ntfy.sh/$ntfy_channel"

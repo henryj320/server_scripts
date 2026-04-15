@@ -3,7 +3,11 @@
 SCAN_PATH="/home/casa/locations"
 LOG_FILE="/home/casa/locations/logs/ClamAV/removed_files.log"
 
-NTFY_TOPIC="https://ntfy.sh/whale_server_1"
+
+NTFY_FILE="/home/software/repositories/server_scripts/ntfy_location.txt"
+ntfy_channel="$(cat "$NTFY_FILE")"
+
+NTFY_TOPIC="https://ntfy.sh/$ntfy_channel"
 
 DEVICE_EMOJI="🛡️"
 DEVICE_NAME="Whale Server"
