@@ -3,7 +3,6 @@
 Last update: 2025-07-31 23:53
 <br><br>
 
-A collection of unrelated scripts used by the Whale Server.
 
 ## server_scripts
 
