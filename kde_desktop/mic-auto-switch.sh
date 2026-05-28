@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -u
 
+# NOTE that this doesn't work as of 2026-05-21.
+# Pipewire changed the way it works. Pipelines are not added on a new Discord call, so there is no way to detect that a call started.
+
 # Device names found with:
 # pactl list short sources
 # pactl list short sinks
@@ -27,7 +30,7 @@ prev=""
 
 # Check if Vesktop is running and in a call.
 while true; do
-    if pactl list source-outputs | grep -q 'application.process.binary = "vesktop"'; then
+    if pactl list sink-inputs | grep -q 'application.process.binary = "vesktop"'; then
         state="DISCORD_ACTIVE"
     else
         state="DISCORD_IDLE"

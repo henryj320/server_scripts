@@ -19,7 +19,9 @@ case "${1:-}" in
         minutes="$(cat "$MINUTES_FILE")"
 
         # TOTAL=1360
-        TOTAL=1410
+        # TOTAL=1410
+        # TOTAL=1510
+        TOTAL=1560
         remaining=$((TOTAL - minutes))
 
         if (( remaining < 0 )); then
