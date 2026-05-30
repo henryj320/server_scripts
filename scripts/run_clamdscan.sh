@@ -3,8 +3,7 @@
 SCAN_PATH="/home/casa/locations"
 LOG_FILE="/home/casa/locations/logs/ClamAV/removed_files.log"
 
-
-NTFY_FILE="/home/software/repositories/server_scripts/ntfy_location.txt"
+NTFY_FILE="/var/lib/ntfy/ntfy_location.txt"
 ntfy_channel="$(cat "$NTFY_FILE")"
 
 NTFY_TOPIC="https://ntfy.sh/$ntfy_channel"
@@ -21,7 +20,7 @@ CURL_BIN="/usr/bin/curl"
 EXCLUDE_DIRS=("Education" "Housing" "pictures" "Nothing Phone 2" "University")
 PRUNE_EXPR=()
 for d in "${EXCLUDE_DIRS[@]}"; do
-  PRUNE_EXPR+=( -name "$d" -o )
+  PRUNE_EXPR+=(-name "$d" -o)
 done
 unset 'PRUNE_EXPR[${#PRUNE_EXPR[@]}-1]'
 
@@ -57,23 +56,28 @@ for d in "${SCAN_DIRS[@]}"; do
 done
 $ECHO_BIN -e "\n" | tee -a "$LOG_FILE"
 
-
-# Run clamdscan on each directory in the list.
+# Run clamdscan ONLY on files changed in the last 24 hours
 for dir in "${SCAN_DIRS[@]}"; do
-  echo
-  echo "===== Scanning directory: $dir =====" | tee -a "$LOG_FILE"
+  $ECHO_BIN -e "\n===== Scanning directory (Changes only): $dir =====" | tee -a "$LOG_FILE"
 
-  if ! find "$dir" \
-    \( -type d \( "${PRUNE_EXPR[@]}" \) -prune \) -o \
-    -type f -print0 |
-    xargs -0 -r "$CLAMDSCAN_BIN" \
-      --verbose \
-      --remove \
-      --infected \
-      --multiscan \
-      --log="$LOG_FILE"
-  then
-    SCAN_EXIT_CODE=2
+  # 1. Check if there are actually any modified files before running clamdscan
+  # This prevents ClamAV from firing up unnecessarily if nothing changed.
+  if [[ $(find "$dir" \( -type d \( "${PRUNE_EXPR[@]}" \) -prune \) -o -type f -mtime -1 -print -quit) ]]; then
+
+    # 2. Execute the scan only on those files
+    if ! find "$dir" \
+      \( -type d \( "${PRUNE_EXPR[@]}" \) -prune \) -o \
+      -type f -mtime -1 -print0 |
+      xargs -0 -r "$CLAMDSCAN_BIN" \
+        --verbose \
+        --remove \
+        --infected \
+        --multiscan \
+        --log="$LOG_FILE"; then
+      SCAN_EXIT_CODE=2
+    fi
+  else
+    $ECHO_BIN "No files modified in the last 24 hours. Skipping ClamAV execution for this directory." | tee -a "$LOG_FILE"
   fi
 done
 
