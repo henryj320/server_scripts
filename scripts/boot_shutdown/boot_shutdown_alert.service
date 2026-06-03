@@ -1,0 +1,18 @@
+# Lives in "/home/software/.config/systemd/user"
+# Enable with: systemctl --user enable --now boot_shutdown_alert.service
+
+[Unit]
+Description=Send ntfy notification on startup and shutdown
+After=network-online.target
+Wants=network-online.target
+Conflicts=shutdown.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/bin/curl -s -d "💻 Asus Zenbook 15 - henry has booted up." https://ntfy.sh/sgANOokNO3pDcCFH
+ExecStop=/usr/bin/curl -s -d "💻 Asus Zenbook 15 - henry shutting down." https://ntfy.sh/sgANOokNO3pDcCFH
+
+[Install]
+WantedBy=multi-user.target
+
