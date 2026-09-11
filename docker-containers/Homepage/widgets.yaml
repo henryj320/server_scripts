@@ -1,0 +1,34 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/widgets
+
+# - logo:
+  #     icon: https://scontent.fman4-2.fna.fbcdn.net/v/t39.30808-6/270116230_6759737574068363_6079043283552389440_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=K_8Ae3GYpCkAX__mPz6&_nc_ht=scontent.fman4-2.fna&oh=00_AfAchXCTm9qIM9MxLAoLNb9rL2COxHu-rMYc7GOlr-u0Fw&oe=659E642E
+
+- resources:
+    cpu: true
+    memory: true
+    cputemp: true
+    units: metric
+    uptime: true
+    refresh: 30000
+      # label: Storage
+      # disk: /home/henry/
+      # - search:
+      # provider: duckduckgo
+      # target: _blank
+
+# - greeting:
+      # text_size: xl
+      # text: Welcome back, Henry!
+
+- search:
+    provider: duckduckgo
+    focus: true
+    target: _blank
+
+- datetime:
+    locale: en
+    format:
+        dateStyle: long
+        timeStyle: short

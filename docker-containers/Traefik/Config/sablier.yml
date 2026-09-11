@@ -1,0 +1,15 @@
+http:
+    middlewares:
+        my-sablier:
+            plugin:
+                sablier:
+                    dynamic:
+                        displayName: My Title
+                        refreshFrequency: 5s
+                        showDetails: "true"
+                        theme: hacker-terminal
+                    group: default
+                    names: whoami,nginx,mealie,homepage
+                    sablierUrl: http://sablier:10000
+                    sessionDuration: 1m
+

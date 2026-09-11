@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    volumes:
+      - uptime-kuma:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "1006:3001"
+    networks:
+            - web
+    labels:
+        - traefik.enable=true
+        - traefik.http.routers.status.entrypoints=websecure
+        - traefik.http.routers.status.tls.certresolver=myresolver
+        - traefik.http.routers.status.rule=Host(`status.hj320mcserver.xyz`)
+
+networks:
+  web:
+    name: web
+    external: true
+
+
+volumes:
+  uptime-kuma:
+    external: true

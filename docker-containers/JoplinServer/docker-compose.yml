@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+    db:
+        container_name: joplin-server-db
+        image: postgres:15
+        volumes:
+            - /home/henry/Software/JoplinServer/joplindb:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        restart: unless-stopped
+        environment:
+            - POSTGRES_PASSWORD=YOUR_PASSWORD_2
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=joplin
+        networks:
+            - web
+    app:
+        container_name: joplin-server-app
+        image: joplin/server:latest
+        depends_on:
+            - db
+        ports:
+            - "22300:22300"
+              # - "465:465"
+        restart: unless-stopped
+        environment:
+            - APP_PORT=22300
+            - APP_BASE_URL=https://joplin.hj320mcserver.xyz
+            - DB_CLIENT=pg
+            - POSTGRES_PASSWORD=YOUR_PASSWORD_2
+            - POSTGRES_DATABASE=joplin
+            - POSTGRES_USER=postgres
+            - POSTGRES_PORT=5432
+            - POSTGRES_HOST=db
+            - MAILER_ENABLED=0
+            - MAILER_HOST=smtp.gmail.com
+            - MAILER_PORT=465
+            - MAILER_SECURE=1
+            - MAILER_AUTH_USER=hj_320+joplin@protonmail.com
+            - MAILER_AUTH_PASSWORD=password
+            - MAILER_NOREPLY_NAME=Joplin
+            - MAILER_NOREPLY_EMAIL=hj_320+joplin@protonmail.com
+        networks:
+            - web
+        labels:
+            - traefik.http.routers.joplin.rule=Host(`joplin.hj320mcserver.xyz`)
+            - traefik.enable=true
+            - traefik.http.routers.joplin.entrypoints=websecure
+            - traefik.http.routers.joplin.tls.certresolver=myresolver
+            
+              # volumes:
+              # joplindb:
+
+networks:
+  web:
+    name: web
+    external: true
